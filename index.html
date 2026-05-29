@@ -3,627 +3,552 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Soldani Coiffure : balayage, mèches et couleur sans ammoniaque à Occhiatana, Balagne</title>
-<meta name="description" content="Salon de coiffure mixte tenu par Kevin au cœur d'Occhiatana, en Balagne. Balayages, mèches, colorations sans ammoniaque, lissage brésilien et coiffure mariage. 5,0 étoiles, réservation Planity 24h/24." />
-<meta name="theme-color" content="#F6F4F2" />
-<meta property="og:title" content="Soldani Coiffure : couleur et balayage en Balagne" />
-<meta property="og:description" content="Balayages, mèches et colorations sans ammoniaque façonnés par Kevin, dans un village perché de Balagne. Réservation Planity." />
-<meta property="og:type" content="website" />
-<meta property="og:image" content="./assets/images/balayage.jpg" />
-
+<title>Soldani Coiffure · Balayage & couleur à Occhiatana, Balagne</title>
+<meta name="description" content="Soldani Coiffure, le salon de Kevin à Occhiatana, en Balagne. Balayage, mèches, coloration sans ammoniaque, coupe femme, homme et enfant. 5,0 sur 5, à neuf kilomètres de L'Île-Rousse." />
+<meta name="theme-color" content="#F6F5F2" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./tailwind.css" />
-
 <style>
   :root{
-    --bg:#F6F4F2; --ink:#211A16; --ink-2:#6E6A66; --accent:#B26A3C; --line:#E4DED7;
-    --hair-root:#2E2018; --hair-copper:#C07B45; --hair-blond:#E7CFA6; --hair-light:#F4E7D2;
-    --hair-gradient:linear-gradient(160deg, #2E2018 0%, #B26A3C 38%, #E7CFA6 78%, #F4E7D2 100%);
-    --balayage-pos:42;     /* curseur de balayage, 0 = racine, 100 = pointes */
-    --balayage-scroll:0;   /* progression scroll 0 -> 1 */
+    --bg:#F6F5F2; --ink:#1A1A1C; --ink2:#6E6A66; --accent:#B06A45; --line:#E3E0DA; --card:#FFFFFF;
   }
-  *{ -webkit-tap-highlight-color:transparent; }
-  html{ scroll-behavior:smooth; }
-  :target, section[id], [id]{ scroll-margin-top:78px; }
-  body{
-    background:var(--bg); color:var(--ink); font-family:'Manrope',system-ui,sans-serif;
-    line-height:1.65; overflow-x:hidden; -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:var(--hair-blond); color:var(--hair-root); }
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  ::selection{background:rgba(176,106,69,.18);color:var(--ink);}
+  [id]{scroll-margin-top:84px;}
 
-  /* Texture fond : fil de soie + grain */
-  .silk-bg{ position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.9; }
+  /* Reveal safety net */
+  .js-ready [data-reveal]{opacity:0;transform:translateY(18px);animation:autoreveal .55s cubic-bezier(.2,.7,.2,1) .12s forwards;}
+  @keyframes autoreveal{to{opacity:1;transform:translateY(0)}}
 
-  /* dégradé matière qui circule au scroll + curseur de balayage */
-  .balayage-field{
-    background:var(--hair-gradient);
-    background-size:200% 240%;
-    background-position:
-      calc(var(--balayage-pos) * 1%)
-      calc((var(--balayage-scroll) * 70% ) + 8%);
-    transition:background-position .24s ease-out;
-  }
-
-  .font-display{ font-family:'Fraunces',serif; letter-spacing:-0.015em; font-variation-settings:"opsz" 120; }
-  .font-hand{ font-family:'Caveat',cursive; }
-
-  .eyebrow{ font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; font-weight:500; }
-
-  /* wordmark clip-text : peigné dans la couleur */
-  .clip-hair{
-    background:var(--hair-gradient);
-    background-size:200% 200%;
-    background-position:calc(var(--balayage-pos) * 1%) center;
-    -webkit-background-clip:text; background-clip:text;
-    -webkit-text-fill-color:transparent; color:transparent;
-    transition:background-position .24s ease-out;
-  }
-  .clip-glide{ animation:hairglide 6s ease-in-out infinite alternate; }
-  @keyframes hairglide{ from{ background-position:18% center; } to{ background-position:82% center; } }
-
-  /* card coin-goutte */
-  .drop-card{ border-radius:8px 64px 8px 8px; border:1px solid var(--line); background:rgba(255,255,255,.55); }
-  .drop-card.alt{ border-radius:64px 8px 8px 8px; }
-
-  /* CTA Planity : dégradé qui prend au survol */
-  .btn-planity{
-    position:relative; display:inline-flex; align-items:center; gap:.55rem;
-    background:var(--accent); color:#fff; font-weight:700; letter-spacing:.01em;
-    padding:.95rem 1.7rem; border-radius:999px; overflow:hidden; isolation:isolate;
-    box-shadow:0 8px 22px -10px rgba(178,106,60,.7);
-    transition:transform .2s ease, box-shadow .2s ease;
-  }
-  .btn-planity::before{
-    content:""; position:absolute; inset:0; z-index:-1;
-    background:var(--hair-gradient); background-size:220% 100%; background-position:100% 50%;
-    opacity:0; transition:opacity .22s ease, background-position .5s ease;
-  }
-  .btn-planity:hover{ transform:translateY(-2px); box-shadow:0 14px 30px -10px rgba(178,106,60,.8); }
-  .btn-planity:hover::before{ opacity:1; background-position:0 50%; }
-
-  .btn-ghost{
-    display:inline-flex; align-items:center; gap:.5rem; padding:.9rem 1.5rem; border-radius:999px;
-    border:1px solid currentColor; font-weight:500; transition:background .2s, color .2s;
-  }
-
-  /* reveals robustes */
-  .js-ready [data-reveal]{ opacity:0; transform:translateY(18px); animation:autoreveal .55s ease-out .25s forwards; }
-  @keyframes autoreveal{ to{ opacity:1; transform:translateY(0); } }
-
-  /* image : sweep de lumière + filtre contraste */
-  .ph{ position:relative; overflow:hidden; }
-  .ph img{ display:block; width:100%; height:100%; object-fit:cover; filter:brightness(.97) saturate(1.05) contrast(1.03); }
-  .ph::after{
-    content:""; position:absolute; top:-40%; left:-60%; width:55%; height:180%;
-    background:linear-gradient(100deg, transparent 0%, rgba(255,255,255,.45) 50%, transparent 100%);
-    transform:skewX(-18deg); opacity:0; pointer-events:none;
-  }
-  .ph.swept::after{ animation:sweep 1.05s ease-out forwards; }
-  @keyframes sweep{ 0%{ opacity:0; left:-60%; } 14%{ opacity:1; } 100%{ opacity:0; left:130%; } }
-
-  /* scrim contraste texte sur image */
-  .scrim{ position:absolute; inset:0; pointer-events:none;
+  /* Hero scrim (permanent) */
+  .scrim{
+    position:absolute;inset:0;pointer-events:none;
     background:
-      radial-gradient(60% 45% at 50% 56%, rgba(20,14,10,.42) 0%, transparent 70%),
-      linear-gradient(180deg, rgba(20,14,10,.55) 0%, rgba(20,14,10,.15) 22%, transparent 46%, transparent 58%, rgba(20,14,10,.4) 84%, rgba(20,14,10,.78) 100%);
+      radial-gradient(60% 50% at 50% 52%, rgba(15,10,6,.32) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(15,10,6,.55) 0%, rgba(15,10,6,.18) 24%, transparent 46%, transparent 56%, rgba(15,10,6,.38) 84%, rgba(15,10,6,.72) 100%);
   }
-  .on-photo, .on-photo *{ color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.45), 0 2px 18px rgba(0,0,0,.35); }
-  .chip-dark{ background:rgba(20,14,10,.42); backdrop-filter:blur(4px); color:#fff; border-radius:999px; padding:.55rem 1.05rem; }
+  .hero-img{filter:brightness(.94) saturate(1.05) contrast(1.03);}
+  .hero-zoom{animation:heroZoom 1.3s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes heroZoom{from{transform:scale(1.07)}to{transform:scale(1)}}
+  .on-photo, .on-photo *{text-shadow:0 1px 2px rgba(0,0,0,.45),0 2px 18px rgba(0,0,0,.35);}
 
-  /* mèche conductrice */
-  .strand-path{ stroke-dasharray:1; stroke-dashoffset:1; }
+  .band-scrim{
+    position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg, rgba(15,10,6,.55) 0%, rgba(15,10,6,.2) 45%, rgba(15,10,6,.12) 100%);
+  }
 
-  /* prestation : brin qui se tire au hover */
-  .presta{ transition:transform .2s ease, background .2s ease; }
-  .presta:hover{ transform:translateX(4px); background:rgba(255,255,255,.55); }
-  .presta .brin{ stroke-dasharray:120; stroke-dashoffset:120; transition:stroke-dashoffset .5s ease; }
-  .presta:hover .brin{ stroke-dashoffset:0; }
+  /* Light sweep signature */
+  .sweep{position:relative;overflow:hidden;}
+  .sweep::after{
+    content:"";position:absolute;top:-30%;left:-60%;width:55%;height:160%;
+    background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.22) 50%, rgba(255,255,255,0) 100%);
+    transform:translateX(0) skewX(-12deg);pointer-events:none;opacity:0;
+  }
+  .sweep.is-swept::after, .sweep:hover::after{animation:lightsweep .75s cubic-bezier(.2,.7,.2,1) forwards;}
+  @keyframes lightsweep{0%{opacity:0;transform:translateX(0) skewX(-12deg)}10%{opacity:1}100%{opacity:0;transform:translateX(320%) skewX(-12deg)}}
 
-  /* curseur de balayage (range custom) */
-  .swatch-slider{ -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px;
-    background:var(--hair-gradient); outline:none; }
-  .swatch-slider::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:30px; height:30px; border-radius:50%;
-    background:#fff; border:3px solid var(--accent); cursor:grab;
-    box-shadow:0 3px 10px -2px rgba(46,32,24,.5); }
-  .swatch-slider::-webkit-slider-thumb:active{ cursor:grabbing; }
-  .swatch-slider::-moz-range-thumb{ width:30px; height:30px; border-radius:50%; background:#fff; border:3px solid var(--accent); cursor:grab; box-shadow:0 3px 10px -2px rgba(46,32,24,.5); }
+  .eyebrow{font-family:'Manrope';font-weight:600;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;}
+  .dotleader{flex:1;border-bottom:1px dotted var(--line);margin:0 .85rem;transform:translateY(-.28em);}
 
-  /* nuancier teintes */
-  .tone{ width:46px; height:46px; border-radius:50%; border:2px solid rgba(255,255,255,.6); cursor:pointer; transition:transform .18s ease, box-shadow .18s ease; }
-  .tone:hover, .tone.active{ transform:scale(1.12); box-shadow:0 6px 16px -6px rgba(46,32,24,.55); }
+  .navlink{position:relative;}
+  .navlink::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--accent);transition:width .28s ease;}
+  .navlink:hover::after{width:100%;}
 
-  /* confettis-mèches */
-  .confetti{ position:absolute; top:-24px; width:2px; height:18px; border-radius:2px; opacity:0; }
+  .btn-outline-light{transition:background .25s ease,color .25s ease;}
+  .btn-outline-light:hover{background:#fff;color:var(--ink);}
+  .btn-accent{transition:transform .18s ease,box-shadow .25s ease;}
+  .btn-accent:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(176,106,69,.22);}
 
-  .link-u{ position:relative; }
-  .link-u::after{ content:""; position:absolute; left:0; bottom:-3px; width:100%; height:1px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .25s ease; }
-  .link-u:hover::after{ transform:scaleX(1); }
+  .vcard{transition:transform .18s ease,box-shadow .25s ease;}
+  .vcard:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(26,26,28,.08);}
 
-  @media (prefers-reduced-motion:reduce){
-    *{ animation:none !important; transition:none !important; }
-    .js-ready [data-reveal]{ opacity:1 !important; transform:none !important; }
+  .maps-frame{filter:grayscale(.15) contrast(.98);}
+
+  .star{opacity:.18;transform:scale(.8);transition:opacity .3s ease,transform .3s ease;}
+  .stars-in .star{opacity:1;transform:scale(1);}
+
+  /* nav state */
+  #nav{transition:background .4s ease,border-color .4s ease,box-shadow .4s ease;}
+  #nav.solid{background:rgba(246,245,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  #nav.solid .nav-brand,#nav.solid .navlink{color:var(--ink);}
+  #nav.solid #burger span{background:var(--ink);}
+
+  @media (prefers-reduced-motion: reduce){
+    .js-ready [data-reveal]{animation:none;opacity:1;transform:none;}
+    .hero-zoom{animation:none;}
+    .sweep.is-swept::after,.sweep:hover::after{animation:none;}
   }
 </style>
 </head>
+<body class="font-body antialiased">
 
-<body>
-
-<!-- TEXTURE FOND : fil de soie peigné + grain miroir -->
-<svg class="silk-bg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <pattern id="silk" width="46" height="200" patternUnits="userSpaceOnUse">
-      <path d="M8 0 C 2 50, 14 100, 8 150 C 2 180, 10 200, 8 200" fill="none" stroke="#E4DED7" stroke-width="1" opacity="0.5"/>
-      <path d="M30 0 C 24 60, 36 110, 30 160 C 25 185, 33 200, 30 200" fill="none" stroke="#E4DED7" stroke-width="1" opacity="0.4"/>
-    </pattern>
-    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
-  </defs>
-  <rect width="100%" height="100%" fill="url(#silk)" opacity="0.5"/>
-  <rect width="100%" height="100%" filter="url(#grain)" opacity="0.03"/>
-</svg>
-
-<!-- MÈCHE CONDUCTRICE (3 brins) qui se dessine au scroll -->
-<svg class="fixed top-0 right-2 sm:right-6 h-full w-16 sm:w-24 z-[1] pointer-events-none hidden sm:block" viewBox="0 0 100 1000" preserveAspectRatio="none" aria-hidden="true">
-  <defs>
-    <linearGradient id="strandGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#2E2018"/><stop offset="40%" stop-color="#B26A3C"/>
-      <stop offset="78%" stop-color="#E7CFA6"/><stop offset="100%" stop-color="#F4E7D2"/>
-    </linearGradient>
-  </defs>
-  <path class="strand-path" id="strandA" d="M50 0 C 20 130, 80 260, 50 400 C 20 540, 80 680, 50 820 C 30 910, 60 960, 50 1000" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round" pathLength="1" opacity="0.85"/>
-  <path class="strand-path" id="strandB" d="M58 0 C 30 140, 86 270, 58 410 C 30 550, 86 690, 58 830 C 40 915, 66 965, 58 1000" fill="none" stroke="url(#strandGrad)" stroke-width="1.4" stroke-linecap="round" pathLength="1" opacity="0.5"/>
-  <path class="strand-path" id="strandC" d="M42 0 C 16 120, 72 250, 42 390 C 14 530, 74 670, 42 810 C 24 905, 56 955, 42 1000" fill="none" stroke="url(#strandGrad)" stroke-width="1" stroke-linecap="round" pathLength="1" opacity="0.4"/>
-</svg>
-
-<!-- NAV -->
-<header class="fixed top-0 inset-x-0 z-40">
-  <nav class="max-w-6xl mx-auto px-5 sm:px-8 py-3.5 flex items-center justify-between bg-bg/80 backdrop-blur-md border-b border-line/70">
-    <a href="#hero" class="font-display text-2xl sm:text-3xl clip-hair clip-glide" style="font-weight:600;">Soldani</a>
-    <div class="hidden md:flex items-center gap-7 text-sm font-medium text-ink/80">
-      <a href="#kevin" class="link-u">Le salon</a>
-      <a href="#prestations" class="link-u">Prestations</a>
-      <a href="#couleur" class="link-u">La couleur</a>
-      <a href="#avis" class="link-u">Avis</a>
-      <a href="#venir" class="link-u">Trouver</a>
-    </div>
-    <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener" class="btn-planity text-sm hidden sm:inline-flex">
-      Réserver sur Planity
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+<!-- ============ NAV ============ -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50">
+  <nav class="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+    <a href="#top" class="nav-brand text-white font-display text-xl tracking-tight flex items-center gap-1.5">
+      SOLDANI<span class="inline-block w-1.5 h-1.5 rounded-full" style="background:var(--accent)"></span>
     </a>
+    <div class="hidden md:flex items-center gap-8 text-white text-sm font-medium">
+      <a href="#salon" class="navlink">Le salon</a>
+      <a href="#prestations" class="navlink">Prestations</a>
+      <a href="#galerie" class="navlink">Le travail</a>
+      <a href="#avis" class="navlink">Avis</a>
+      <a href="#rdv" class="navlink">Trouver</a>
+      <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener"
+         class="navlink font-semibold" style="color:#E8B79C">Prendre RDV</a>
+    </div>
+    <button id="burger" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Ouvrir le menu">
+      <span class="block w-6 h-px bg-white transition"></span>
+      <span class="block w-6 h-px bg-white transition"></span>
+      <span class="block w-6 h-px bg-white transition"></span>
+    </button>
   </nav>
+  <!-- mobile menu -->
+  <div id="mobile-menu" class="md:hidden hidden bg-bg border-b border-line">
+    <div class="px-5 py-4 flex flex-col gap-3 text-ink text-base">
+      <a href="#salon" class="mob-link py-1">Le salon</a>
+      <a href="#prestations" class="mob-link py-1">Prestations</a>
+      <a href="#galerie" class="mob-link py-1">Le travail</a>
+      <a href="#avis" class="mob-link py-1">Avis</a>
+      <a href="#rdv" class="mob-link py-1">Trouver</a>
+      <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener"
+         class="mob-link py-2 font-semibold text-accent">Prendre rendez-vous</a>
+    </div>
+  </div>
 </header>
 
-<!-- MOBILE STICKY CTA -->
-<a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener" class="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-accent text-white text-center font-bold py-3.5 shadow-[0_-6px_18px_-8px_rgba(46,32,24,.4)]">
-  Réserver sur Planity
-</a>
-
-<main class="relative z-10">
-
-<!-- 1. HERO BALAYAGE -->
-<section id="hero" class="relative min-h-[100svh] flex flex-col justify-center overflow-hidden">
-  <div class="balayage-field absolute inset-0" aria-hidden="true"></div>
-  <div class="absolute inset-0 bg-bg/10" aria-hidden="true"></div>
-  <div class="relative max-w-6xl mx-auto w-full px-5 sm:px-8 pt-24 pb-28 sm:pb-16 on-photo">
-    <p class="eyebrow mb-5" data-reveal style="color:#FFE7C2;">Salon mixte · Occhiatana, Balagne</p>
-    <h1 class="font-display leading-[0.92]" style="font-weight:300; font-size:clamp(3.4rem,16vw,9rem);" data-reveal>
-      Soldani
-      <span class="block font-hand" style="font-weight:600; font-size:clamp(1.6rem,6vw,3rem); text-shadow:0 1px 8px rgba(0,0,0,.4);">Coiffure &amp; couleur</span>
-    </h1>
-    <p class="mt-6 max-w-xl text-lg sm:text-xl" style="font-weight:400;" data-reveal>
-      Balayages, mèches et colorations sans ammoniaque, façonnés par Kevin au cœur d'un village perché de Balagne. La couleur sur-mesure, le geste précis, le résultat sublime.
-    </p>
-    <div class="mt-9 flex flex-wrap items-center gap-4" data-reveal>
-      <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener" class="btn-planity text-base">
-        Réserver sur Planity
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <a href="#kevin" class="btn-ghost text-base" style="color:#fff;">Découvrir le salon</a>
-      <span class="chip-dark text-sm font-medium inline-flex items-center gap-2">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="#FFD79A"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-        5,0 · 150 avis
-      </span>
-    </div>
-
-    <!-- CURSEUR DE BALAYAGE -->
-    <div class="mt-12 sm:mt-16 max-w-md" data-reveal>
-      <div class="flex items-center justify-between mb-2.5">
-        <span class="eyebrow" style="color:#FFE7C2;">Tirez la mèche</span>
-        <span class="font-hand text-2xl" style="color:#FBF0DA;">racine → pointes</span>
-      </div>
-      <input id="balayageSlider" class="swatch-slider" type="range" min="0" max="100" value="42" aria-label="Curseur de balayage : faites glisser de la racine vers les pointes" />
-    </div>
-  </div>
-</section>
-
-<!-- 2. INTRO KEVIN -->
-<section id="kevin" class="relative py-20 sm:py-28" style="background:linear-gradient(180deg, rgba(192,123,69,.07), rgba(246,244,242,0));">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8 grid md:grid-cols-[1.05fr_0.95fr] gap-10 sm:gap-16 items-center">
-    <div>
-      <p class="eyebrow text-accent mb-4" data-reveal>Le salon</p>
-      <h2 class="font-display text-ink leading-tight" style="font-weight:300; font-size:clamp(2.4rem,7vw,4.2rem);" data-reveal>
-        Entre les mains <span class="clip-hair" style="font-weight:600;">de Kevin</span>
-      </h2>
-      <p class="mt-6 text-ink-2 text-lg max-w-lg" data-reveal>
-        Passionné, à l'écoute, Kevin façonne chaque couleur sur-mesure. Du balayage lumineux à la coupe précise, il lit la matière du cheveu avant de la révéler. Ici, on prend le temps, on échange, et on repart avec un résultat pensé pour soi.
-      </p>
-      <figure class="mt-8 border-l-2 pl-5" style="border-color:var(--accent);" data-reveal>
-        <blockquote class="font-display italic text-xl sm:text-2xl text-ink" style="font-weight:300;">
-          « Kevin est à l'écoute, avec le brin de folie qu'on adore quand on souhaite un peu d'originalité dans sa coupe. J'ai enfin trouvé mon coiffeur. »
-        </blockquote>
-        <figcaption class="mt-3 text-sm text-ink-2">Avis Planity, 5 étoiles</figcaption>
-      </figure>
-      <p class="mt-8 font-hand text-4xl text-accent" data-reveal>Kevin</p>
-    </div>
-    <div class="ph drop-card aspect-[2/3] shadow-[0_24px_60px_-30px_rgba(46,32,24,.5)]" data-reveal data-sweep>
-      <img src="./assets/images/miroir-salon.jpg" alt="Miroir et lumière douce du salon Soldani" loading="lazy" />
-    </div>
-  </div>
-</section>
-
-<!-- 3. PRESTATIONS -->
-<section id="prestations" class="relative py-20 sm:py-28">
-  <div class="max-w-5xl mx-auto px-5 sm:px-8">
-    <div class="max-w-2xl">
-      <p class="eyebrow text-accent mb-4" data-reveal>Savoir-faire</p>
-      <h2 class="font-display text-ink leading-tight" style="font-weight:300; font-size:clamp(2.2rem,6vw,3.6rem);" data-reveal>Nos prestations</h2>
-      <p class="mt-5 text-ink-2 text-lg" data-reveal>
-        Femmes, hommes, enfants : le salon est mixte. Chaque prestation se découvre comme une mèche déroulée. La grille tarifaire complète vous attend sur Planity.
-      </p>
-    </div>
-
-    <div class="mt-12 divide-y divide-line/80 border-t border-line/80">
-      <!-- item -->
-      <article class="presta py-6 sm:py-7 px-3 sm:px-5 rounded-lg flex items-start gap-5" data-reveal>
-        <svg width="40" height="60" viewBox="0 0 40 60" class="shrink-0 mt-1" aria-hidden="true"><path class="brin" d="M20 2 C 8 16, 32 30, 20 44 C 12 53, 24 58, 20 58" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <div class="flex-1">
-          <h3 class="font-body font-bold text-xl text-ink">Balayage &amp; ombré</h3>
-          <p class="mt-1 text-ink-2">Reflets dégradés sur-mesure, du naturel lumineux au contraste affirmé. La spécialité de la maison, pensée photo-ready.</p>
-        </div>
-      </article>
-      <article class="presta py-6 sm:py-7 px-3 sm:px-5 rounded-lg flex items-start gap-5" data-reveal>
-        <svg width="40" height="60" viewBox="0 0 40 60" class="shrink-0 mt-1" aria-hidden="true"><path class="brin" d="M20 2 C 8 16, 32 30, 20 44 C 12 53, 24 58, 20 58" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <div class="flex-1">
-          <h3 class="font-body font-bold text-xl text-ink">Mèches</h3>
-          <p class="mt-1 text-ink-2">Éclaircissement précis, mèche par mèche, pour de la lumière et du relief sans agresser la fibre.</p>
-        </div>
-      </article>
-      <article class="presta py-6 sm:py-7 px-3 sm:px-5 rounded-lg flex items-start gap-5" data-reveal>
-        <svg width="40" height="60" viewBox="0 0 40 60" class="shrink-0 mt-1" aria-hidden="true"><path class="brin" d="M20 2 C 8 16, 32 30, 20 44 C 12 53, 24 58, 20 58" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <div class="flex-1">
-          <h3 class="font-body font-bold text-xl text-ink">Coloration sans ammoniaque</h3>
-          <p class="mt-1 text-ink-2">Une couleur respectueuse du cheveu et du cuir chevelu, pour des reflets riches et durables, dans le confort.</p>
-        </div>
-      </article>
-      <article class="presta py-6 sm:py-7 px-3 sm:px-5 rounded-lg flex items-start gap-5" data-reveal>
-        <svg width="40" height="60" viewBox="0 0 40 60" class="shrink-0 mt-1" aria-hidden="true"><path class="brin" d="M20 2 C 8 16, 32 30, 20 44 C 12 53, 24 58, 20 58" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <div class="flex-1">
-          <h3 class="font-body font-bold text-xl text-ink">Lissage brésilien</h3>
-          <p class="mt-1 text-ink-2">Un cheveu discipliné, soyeux et brillant sur la durée, plus facile à coiffer au quotidien.</p>
-        </div>
-      </article>
-      <article class="presta py-6 sm:py-7 px-3 sm:px-5 rounded-lg flex items-start gap-5" data-reveal>
-        <svg width="40" height="60" viewBox="0 0 40 60" class="shrink-0 mt-1" aria-hidden="true"><path class="brin" d="M20 2 C 8 16, 32 30, 20 44 C 12 53, 24 58, 20 58" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <div class="flex-1">
-          <h3 class="font-body font-bold text-xl text-ink">Coupe femme, homme, enfant</h3>
-          <p class="mt-1 text-ink-2">Une coupe lue selon votre matière et votre allure. Le salon accueille toute la famille.</p>
-        </div>
-      </article>
-      <article class="presta py-6 sm:py-7 px-3 sm:px-5 rounded-lg flex items-start gap-5" data-reveal>
-        <svg width="40" height="60" viewBox="0 0 40 60" class="shrink-0 mt-1" aria-hidden="true"><path class="brin" d="M20 2 C 8 16, 32 30, 20 44 C 12 53, 24 58, 20 58" fill="none" stroke="url(#strandGrad)" stroke-width="2.4" stroke-linecap="round"/></svg>
-        <div class="flex-1">
-          <h3 class="font-body font-bold text-xl text-ink">Coiffure mariage &amp; événement</h3>
-          <p class="mt-1 text-ink-2">Coiffages tenue longue durée pour vos grands jours, pensés avec vous bien en amont.</p>
-        </div>
-      </article>
-    </div>
-
-    <!-- respirations photo -->
-    <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 gap-5">
-      <div class="ph drop-card aspect-[4/3]" data-reveal data-sweep>
-        <img src="./assets/images/ciseaux.jpg" alt="Ciseaux ciselant une mèche, gros plan sur le savoir-faire" loading="lazy" />
-      </div>
-      <div class="ph drop-card alt aspect-[4/3]" data-reveal data-sweep>
-        <img src="./assets/images/homme-coupe.jpg" alt="Coupe homme nette, salon mixte Soldani" loading="lazy" />
-      </div>
-      <div class="ph drop-card aspect-[4/3] col-span-2 sm:col-span-1" data-reveal data-sweep>
-        <img src="./assets/images/soin-cheveux.jpg" alt="Soin profond et brillance, cheveux nourris au salon Soldani" loading="lazy" />
-      </div>
-    </div>
-
-    <p class="mt-8 text-center" data-reveal>
-      <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener" class="link-u text-accent font-bold text-lg">Voir tous les tarifs sur Planity →</a>
-    </p>
-  </div>
-</section>
-
-<!-- 4. SIGNATURE COULEUR -->
-<section id="couleur" class="relative py-20 sm:py-28" style="background:linear-gradient(180deg, rgba(231,207,166,.16), rgba(246,244,242,0));">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8 grid md:grid-cols-2 gap-10 sm:gap-14 items-center">
-    <div class="ph drop-card aspect-[4/5] sm:aspect-[3/4] shadow-[0_24px_60px_-30px_rgba(46,32,24,.5)] order-2 md:order-1" data-reveal data-parallax data-sweep>
-      <img src="./assets/images/balayage.jpg" alt="Balayage aux reflets cuivrés, matière soyeuse" loading="lazy" />
-    </div>
-    <div class="order-1 md:order-2">
-      <p class="eyebrow text-accent mb-4" data-reveal>Expertise</p>
-      <h2 class="font-display text-ink leading-tight" style="font-weight:300; font-size:clamp(2.2rem,6vw,3.6rem);" data-reveal>
-        La couleur, <span class="clip-hair" style="font-weight:600;">sans compromis</span>
-      </h2>
-      <p class="mt-5 text-ink-2 text-lg max-w-lg" data-reveal>
-        Du châtain profond au blond lumineux, faites glisser le nuancier pour réchauffer la page : c'est le geste du balayage de Kevin, racine vers pointes.
-      </p>
-
-      <!-- nuancier interactif -->
-      <div class="mt-7 flex items-center gap-4" data-reveal>
-        <button class="tone" data-tone="14" style="background:#2E2018;" aria-label="Teinte châtain racine"></button>
-        <button class="tone active" data-tone="42" style="background:#B26A3C;" aria-label="Teinte cuivre balayage"></button>
-        <button class="tone" data-tone="74" style="background:#E7CFA6;" aria-label="Teinte blond lumineux"></button>
-        <button class="tone" data-tone="92" style="background:#F4E7D2;" aria-label="Teinte reflet clair"></button>
-        <span class="font-hand text-2xl text-accent ml-1">le brin de folie</span>
-      </div>
-
-      <div class="mt-9 grid sm:grid-cols-3 gap-4" data-reveal>
-        <div class="drop-card p-4">
-          <h3 class="font-body font-bold text-ink">Sans ammoniaque</h3>
-          <p class="text-sm text-ink-2 mt-1">Respect de la fibre et du cuir chevelu.</p>
-        </div>
-        <div class="drop-card alt p-4">
-          <h3 class="font-body font-bold text-ink">Sur-mesure</h3>
-          <p class="text-sm text-ink-2 mt-1">Une teinte lue selon votre carnation.</p>
-        </div>
-        <div class="drop-card p-4">
-          <h3 class="font-body font-bold text-ink">Photo-ready</h3>
-          <p class="text-sm text-ink-2 mt-1">Des reflets qui captent la lumière.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5. AVIS 5 ETOILES -->
-<section id="avis" class="relative py-20 sm:py-28 overflow-hidden">
-  <div id="confettiHost" class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
-  <div class="relative max-w-5xl mx-auto px-5 sm:px-8">
-    <div class="text-center max-w-2xl mx-auto">
-      <p class="eyebrow text-accent mb-4" data-reveal>Preuve par la matière</p>
-      <h2 class="font-display text-ink leading-tight" style="font-weight:300; font-size:clamp(2.2rem,6vw,3.6rem);" data-reveal>Ce qu'elles en disent</h2>
-      <div class="mt-6 inline-flex flex-wrap justify-center items-center gap-2 rounded-full px-5 py-2.5 text-white font-medium text-sm" style="background:var(--accent);" data-reveal>
-        <span class="inline-flex items-center gap-1">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="#FFE7C2"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          5,0
-        </span>
-        <span class="opacity-70">·</span><span>136 avis Planity</span>
-        <span class="opacity-70">·</span><span>14 avis Google</span>
-        <span class="opacity-70">·</span><span>100% 5 étoiles</span>
-      </div>
-    </div>
-
-    <div class="mt-12 grid sm:grid-cols-2 gap-5">
-      <figure class="drop-card p-6 sm:p-7" data-reveal>
-        <div class="flex gap-1 mb-3" aria-label="5 étoiles">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-        </div>
-        <blockquote class="font-display italic text-lg sm:text-xl text-ink" style="font-weight:300;">« Ravie de mes mèches, accueil au top, j'ai passé un très bon moment. »</blockquote>
-        <figcaption class="mt-3 text-sm text-ink-2">Avis Planity</figcaption>
-      </figure>
-      <figure class="drop-card alt p-6 sm:p-7" data-reveal>
-        <div class="flex gap-1 mb-3" aria-label="5 étoiles">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-        </div>
-        <blockquote class="font-display italic text-lg sm:text-xl text-ink" style="font-weight:300;">« Accueil exceptionnel, prestation ultra pro, merci aux 4 mains en or. »</blockquote>
-        <figcaption class="mt-3 text-sm text-ink-2">Avis Planity</figcaption>
-      </figure>
-      <figure class="drop-card alt p-6 sm:p-7" data-reveal>
-        <div class="flex gap-1 mb-3" aria-label="5 étoiles">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-        </div>
-        <blockquote class="font-display italic text-lg sm:text-xl text-ink" style="font-weight:300;">« Parfait. Mon balayage est sublime, merci. »</blockquote>
-        <figcaption class="mt-3 text-sm text-ink-2">Avis Planity</figcaption>
-      </figure>
-      <figure class="drop-card p-6 sm:p-7" data-reveal>
-        <div class="flex gap-1 mb-3" aria-label="5 étoiles">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#B26A3C"><path d="M12 2l2.9 6.3L22 9.2l-5 4.6 1.3 6.9L12 17.6 5.7 20.7 7 13.8l-5-4.6 7.1-.9z"/></svg>
-        </div>
-        <blockquote class="font-display italic text-lg sm:text-xl text-ink" style="font-weight:300;">« Moment très agréable. J'ai enfin trouvé mon coiffeur. »</blockquote>
-        <figcaption class="mt-3 text-sm text-ink-2">Avis Planity</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- 6. CADRE BALAGNE -->
-<section class="relative py-24 sm:py-36 overflow-hidden">
-  <div class="ph absolute inset-0" data-parallax data-sweep>
-    <img src="./assets/images/village-balagne.jpg" alt="Village perché de Balagne baigné de lumière dorée corse" loading="lazy" class="!w-[110%] !h-[110%] -translate-x-[5%]" />
-  </div>
+<!-- ============ HERO ============ -->
+<section id="top" class="relative min-h-[100svh] w-full overflow-hidden flex items-end">
+  <img src="./assets/images/balayage.jpg" alt="Chevelure balayée aux reflets cuivrés, lumière douce"
+       class="hero-img hero-zoom absolute inset-0 w-full h-full object-cover" loading="eager" fetchpriority="high" />
   <div class="scrim"></div>
-  <div class="relative max-w-4xl mx-auto px-5 sm:px-8 text-center on-photo">
-    <p class="eyebrow mb-4" data-reveal style="color:#FFE7C2;">Le jardin de la Corse</p>
-    <h2 class="font-display leading-tight" style="font-weight:300; font-size:clamp(2.2rem,6vw,4rem);" data-reveal>
-      Se faire coiffer dans un village perché de Balagne
+
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 pb-16 sm:pb-20">
+    <div class="on-photo max-w-3xl">
+      <p class="eyebrow mb-5" style="color:#F1E0CF">Coiffure · Occhiatana, Balagne</p>
+      <h1 class="font-display font-light text-white leading-[0.98] tracking-tight"
+          style="font-size:clamp(2.7rem,8vw,6rem)">
+        La couleur,<br><span class="italic font-light">comme une lumière.</span>
+      </h1>
+      <p class="mt-6 text-white/90 max-w-xl text-base sm:text-lg leading-relaxed font-light">
+        Balayage, mèches et soin du cheveu, par Kevin, au cœur de la Balagne. À neuf kilomètres de L'Île-Rousse, un salon où l'on prend le temps.
+      </p>
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener"
+           class="btn-outline-light inline-flex items-center gap-2 border border-white/85 text-white px-7 py-3.5 rounded-full text-sm font-semibold tracking-wide">
+          Prendre rendez-vous
+        </a>
+        <a href="#galerie" class="inline-flex items-center gap-2 text-white/90 text-sm font-medium border-b border-white/40 pb-0.5 hover:border-white transition">
+          Voir le travail
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- rating chip -->
+  <div class="on-photo absolute z-10 right-5 sm:right-8 bottom-16 sm:bottom-20 hidden sm:flex items-center gap-2 rounded-full px-4 py-2.5"
+       style="background:rgba(15,10,6,.42);backdrop-filter:blur(6px)">
+    <span style="color:#E8B79C" class="text-sm">★★★★★</span>
+    <span class="text-white text-sm font-semibold">5,0</span>
+    <span class="text-white/70 text-xs">· 150 avis</span>
+  </div>
+  <div id="hero-sentinel" class="absolute bottom-0 h-px w-full"></div>
+</section>
+
+<!-- ============ MANIFESTE ============ -->
+<section class="py-24 sm:py-32 px-5 sm:px-8">
+  <div class="max-w-4xl mx-auto">
+    <p data-reveal class="eyebrow text-ink2 mb-7">Le geste</p>
+    <h2 data-reveal class="font-display font-light tracking-tight leading-[1.05]" style="font-size:clamp(1.9rem,4.6vw,3.4rem)">
+      Chez Soldani, on ne change pas une tête, <span class="italic" style="color:var(--accent)">on la révèle.</span>
     </h2>
-    <p class="mt-6 max-w-2xl mx-auto text-lg" data-reveal>
-      Occhiatana veille à 9 km de L'Île-Rousse, sur les hauteurs de la Balagne, entre oliviers centenaires et maquis. Un cadre authentique où l'on prend le temps. La couleur prend une autre lumière, ici.
+    <span data-reveal class="block mt-7 h-px w-16" style="background:var(--accent)"></span>
+    <p data-reveal class="mt-7 text-ink2 text-lg leading-relaxed max-w-2xl font-light">
+      Une couleur qui vous ressemble, posée avec patience et lue à la lumière de la Balagne. Un balayage sans ammoniaque qui respecte le cheveu, une coupe pensée pour durer. Le luxe, ici, c'est le temps que l'on vous accorde.
     </p>
   </div>
 </section>
 
-<!-- 7. VENIR / INFOS -->
-<section id="venir" class="relative py-20 sm:py-28">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8">
-    <div class="max-w-2xl">
-      <p class="eyebrow text-accent mb-4" data-reveal>Pratique</p>
-      <h2 class="font-display text-ink leading-tight" style="font-weight:300; font-size:clamp(2.2rem,6vw,3.6rem);" data-reveal>Venir au salon</h2>
+<!-- ============ LE SALON / KEVIN ============ -->
+<section id="salon" class="px-5 sm:px-8 pb-24 sm:pb-32">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+    <div data-reveal class="lg:col-span-5">
+      <div class="sweep js-sweep border border-line rounded-sm overflow-hidden">
+        <img src="./assets/images/miroir-salon.jpg" alt="Coloriste appliquant un balayage au pinceau, mèches en papillotes"
+             class="w-full h-full object-cover aspect-[4/5]" loading="lazy" />
+      </div>
     </div>
+    <div class="lg:col-span-7 lg:pl-4">
+      <p data-reveal class="eyebrow text-ink2 mb-5">Le salon</p>
+      <h2 data-reveal class="font-display font-light tracking-tight leading-[1.05]" style="font-size:clamp(1.8rem,4vw,3rem)">
+        Kevin, coloriste à Occhiatana
+      </h2>
+      <p data-reveal class="mt-6 text-ink2 text-lg leading-relaxed font-light">
+        Kevin coiffe avec ce brin de folie que ses clientes adorent : une oreille attentive, une vraie envie de comprendre ce que vous cherchez, et la technique pour y arriver. Balayage, mèches, ombré : la couleur est son terrain de jeu.
+      </p>
+      <p data-reveal class="mt-4 text-ink2 text-lg leading-relaxed font-light">
+        Le salon tient dans un village perché de Balagne, à quelques minutes de L'Île-Rousse. On y vient pour le résultat, on y revient pour l'accueil. Les colorations se font sans ammoniaque, parce qu'un beau cheveu reste d'abord un cheveu en bonne santé.
+      </p>
+      <p data-reveal class="mt-8 font-semibold text-ink text-sm tracking-wide flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span>Balayage</span><span style="color:var(--accent)">·</span>
+        <span>Sans ammoniaque</span><span style="color:var(--accent)">·</span>
+        <span>Sur-mesure</span>
+      </p>
+    </div>
+  </div>
+</section>
 
-    <div class="mt-12 grid md:grid-cols-2 gap-8 sm:gap-12 items-start">
-      <div data-reveal>
-        <div class="drop-card p-6 sm:p-7">
-          <h3 class="font-body font-bold text-lg text-ink mb-4">Horaires</h3>
-          <ul class="text-ink-2 space-y-2.5">
-            <li class="flex justify-between border-b border-line/70 pb-2"><span>Lundi</span><span class="text-ink/50">Fermé</span></li>
-            <li class="flex justify-between border-b border-line/70 pb-2"><span>Mardi</span><span class="font-medium text-ink">9h00 - 18h00</span></li>
-            <li class="flex justify-between border-b border-line/70 pb-2"><span>Mercredi</span><span class="font-medium text-ink">9h00 - 18h00</span></li>
-            <li class="flex justify-between border-b border-line/70 pb-2"><span>Jeudi</span><span class="font-medium text-ink">9h00 - 18h00</span></li>
-            <li class="flex justify-between border-b border-line/70 pb-2"><span>Vendredi</span><span class="font-medium text-ink">9h00 - 18h00</span></li>
-            <li class="flex justify-between border-b border-line/70 pb-2"><span>Samedi</span><span class="font-medium text-ink">9h00 - 14h00</span></li>
-            <li class="flex justify-between"><span>Dimanche</span><span class="text-ink/50">Fermé</span></li>
-          </ul>
-        </div>
-
-        <div class="mt-6 drop-card alt p-6 sm:p-7">
-          <h3 class="font-body font-bold text-lg text-ink mb-3">Coordonnées</h3>
-          <p class="text-ink-2">20 U Ghjandaracciu<br/>20226 Occhiatana, Balagne, Haute-Corse</p>
-          <p class="mt-3">
-            <a href="tel:+33775834320" class="link-u text-accent font-bold text-lg">07 75 83 43 20</a>
-          </p>
-          <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener" class="btn-planity mt-5 text-base">
-            Réserver sur Planity
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
+<!-- ============ PRESTATIONS ============ -->
+<section id="prestations" class="px-5 sm:px-8 pb-24 sm:pb-32">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <!-- left : intro + image -->
+      <div class="lg:col-span-4">
+        <p data-reveal class="eyebrow text-ink2 mb-5">Prestations</p>
+        <h2 data-reveal class="font-display font-light tracking-tight leading-[1.05]" style="font-size:clamp(1.8rem,4vw,2.8rem)">
+          Ce que l'on fait
+        </h2>
+        <p data-reveal class="mt-5 text-ink2 leading-relaxed font-light">
+          Chaque tête est différente, chaque devis l'est aussi. Les tarifs sont établis en salon, selon la longueur et la technique. Le plus simple : réservez votre créneau, on en parle ensemble.
+        </p>
+        <div data-reveal class="sweep js-sweep mt-8 border border-line rounded-sm overflow-hidden max-w-[18rem]">
+          <img src="./assets/images/ciseaux.jpg" alt="Shampoing et soin du cheveu au bac, moment de détente"
+               class="w-full h-full object-cover aspect-square" loading="lazy" />
         </div>
       </div>
 
-      <div class="ph drop-card overflow-hidden shadow-[0_24px_60px_-30px_rgba(46,32,24,.45)] h-[360px] sm:h-[520px]" data-reveal>
-        <iframe title="Carte : Soldani Coiffure à Occhiatana" src="https://maps.google.com/maps?q=42.572536,9.0088673&z=15&output=embed" width="100%" height="100%" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- right : tarif lines -->
+      <div class="lg:col-span-8 lg:pt-2">
+        <!-- group 1 -->
+        <p data-reveal class="eyebrow mb-4" style="color:var(--accent)">Couleur & balayage</p>
+        <ul class="mb-10">
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line">
+            <span class="font-display text-lg sm:text-xl font-normal">Balayage & ombré</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line">
+            <span class="font-display text-lg sm:text-xl font-normal">Mèches & éclaircissement</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line border-b">
+            <span class="font-display text-lg sm:text-xl font-normal">Coloration sans ammoniaque</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+        </ul>
+
+        <!-- group 2 -->
+        <p data-reveal class="eyebrow mb-4" style="color:var(--accent)">Coupe femme, homme & enfant</p>
+        <ul class="mb-10">
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line">
+            <span class="font-display text-lg sm:text-xl font-normal">Coupe femme & coiffage</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line">
+            <span class="font-display text-lg sm:text-xl font-normal">Coupe homme</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line border-b">
+            <span class="font-display text-lg sm:text-xl font-normal">Coupe enfant</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+        </ul>
+
+        <!-- group 3 -->
+        <p data-reveal class="eyebrow mb-4" style="color:var(--accent)">Soin, lissage & événement</p>
+        <ul>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line">
+            <span class="font-display text-lg sm:text-xl font-normal">Soin du cheveu</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">en cabine</span>
+          </li>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line">
+            <span class="font-display text-lg sm:text-xl font-normal">Lissage brésilien</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">devis en salon</span>
+          </li>
+          <li data-reveal class="flex items-baseline py-3.5 border-t border-line border-b">
+            <span class="font-display text-lg sm:text-xl font-normal">Coiffure mariage</span>
+            <span class="dotleader"></span>
+            <span class="text-ink2 text-sm">sur rendez-vous</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-</main>
+<!-- ============ GALERIE ============ -->
+<section id="galerie" class="px-5 sm:px-8 pb-24 sm:pb-32">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-end justify-between mb-10 gap-6">
+      <div>
+        <p data-reveal class="eyebrow text-ink2 mb-4">Le travail</p>
+        <h2 data-reveal class="font-display font-light tracking-tight leading-[1.05]" style="font-size:clamp(1.9rem,4.4vw,3.2rem)">
+          Quelques têtes
+        </h2>
+      </div>
+      <p data-reveal class="hidden sm:block text-ink2 text-sm max-w-xs text-right font-light">
+        Couleur, lumière et matière. Un aperçu du geste de Kevin.
+      </p>
+    </div>
 
-<!-- FOOTER POINTES -->
-<footer class="relative pt-20 pb-28 sm:pb-16" style="background:linear-gradient(180deg, rgba(244,231,210,.55), rgba(244,231,210,.85));">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8">
-    <a href="#hero" class="font-display block clip-hair clip-glide leading-none" style="font-weight:300; font-size:clamp(3.2rem,15vw,9rem);">Soldani</a>
-    <div class="mt-8 grid sm:grid-cols-3 gap-8 text-sm">
-      <div>
-        <p class="eyebrow text-accent mb-2">Le salon</p>
-        <p class="text-ink-2">Coiffure mixte &amp; couleur<br/>20 U Ghjandaracciu<br/>20226 Occhiatana, Balagne</p>
-      </div>
-      <div>
-        <p class="eyebrow text-accent mb-2">Horaires</p>
-        <p class="text-ink-2">Mardi au vendredi : 9h00 - 18h00<br/>Samedi : 9h00 - 14h00<br/>Lundi &amp; dimanche : fermé</p>
-      </div>
-      <div>
-        <p class="eyebrow text-accent mb-2">Réserver</p>
-        <p class="text-ink-2">
-          <a href="tel:+33775834320" class="link-u font-medium text-ink">07 75 83 43 20</a><br/>
-          <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener" class="link-u font-medium text-ink">Planity 24h/24</a>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- dominant -->
+      <figure data-reveal class="lg:row-span-2 sm:col-span-2 lg:col-span-1">
+        <div class="sweep js-sweep border border-line rounded-sm overflow-hidden">
+          <img src="./assets/images/soin-cheveux.jpg" alt="Application minutieuse de la couleur, mèche en papillote et bol de teinture"
+               class="w-full h-full object-cover aspect-[4/5] lg:aspect-[3/4]" loading="lazy" />
+        </div>
+        <figcaption class="mt-3 text-ink2 text-sm">Balayage cuivré, brillance après soin</figcaption>
+      </figure>
+
+      <figure data-reveal class="sm:col-span-2 lg:col-span-2">
+        <div class="sweep js-sweep border border-line rounded-sm overflow-hidden">
+          <img src="./assets/images/homme-coupe.jpg" alt="Coupe homme moderne et soignée, salon mixte, lumière naturelle"
+               class="w-full h-full object-cover aspect-[16/9] lg:aspect-[16/10]" loading="lazy" />
+        </div>
+        <figcaption class="mt-3 text-ink2 text-sm">Coupe homme, lignes nettes</figcaption>
+      </figure>
+
+      <figure data-reveal class="lg:col-span-1">
+        <div class="sweep js-sweep border border-line rounded-sm overflow-hidden">
+          <img src="./assets/images/ciseaux.jpg" alt="Shampoing et soin du cheveu au bac, moment de détente"
+               class="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+        </div>
+        <figcaption class="mt-3 text-ink2 text-sm">Le geste, au plus près</figcaption>
+      </figure>
+
+      <figure data-reveal class="lg:col-span-1">
+        <div class="sweep js-sweep border border-line rounded-sm overflow-hidden">
+          <img src="./assets/images/miroir-salon.jpg" alt="Coloriste appliquant un balayage au pinceau, mèches en papillotes"
+               class="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+        </div>
+        <figcaption class="mt-3 text-ink2 text-sm">Au salon, à Occhiatana</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AVIS ============ -->
+<section id="avis" class="px-5 sm:px-8 pb-24 sm:pb-32">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <!-- counter -->
+      <div class="lg:col-span-4">
+        <p data-reveal class="eyebrow text-ink2 mb-6">Ils nous notent</p>
+        <div data-reveal class="font-display font-light leading-none" style="font-size:clamp(4.5rem,12vw,8rem)">5,0</div>
+        <div id="stars" class="flex gap-1.5 mt-4 text-2xl" aria-label="Cinq étoiles sur cinq" style="color:var(--accent)">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p data-reveal class="mt-6 text-ink2 leading-relaxed max-w-xs font-light">
+          14 avis Google · 136 avis clients · 100 % cinq étoiles. Une note rare, surtout pour un salon de village.
         </p>
-        <p class="font-hand text-3xl text-accent mt-3">Kevin</p>
+      </div>
+
+      <!-- verbatims -->
+      <div class="lg:col-span-8 grid sm:grid-cols-2 gap-5">
+        <blockquote data-reveal class="vcard bg-card border border-line rounded-sm p-7 sm:col-span-2">
+          <span class="font-display text-3xl leading-none block mb-3" style="color:var(--accent)">&ldquo;</span>
+          <p class="font-display font-light text-xl sm:text-2xl leading-snug">
+            Parfait, mon balayage est sublime. Merci.
+          </p>
+          <footer class="mt-5 text-ink2 text-sm">Cliente, avril 2026</footer>
+        </blockquote>
+
+        <blockquote data-reveal class="vcard bg-card border border-line rounded-sm p-7">
+          <span class="font-display text-3xl leading-none block mb-3" style="color:var(--accent)">&ldquo;</span>
+          <p class="text-ink leading-relaxed">
+            Kevin est à l'écoute, avec le brin de folie qu'on adore quand on souhaite un peu d'originalité. J'ai enfin trouvé mon coiffeur.
+          </p>
+          <footer class="mt-5 text-ink2 text-sm">Cliente, mai 2026</footer>
+        </blockquote>
+
+        <blockquote data-reveal class="vcard bg-card border border-line rounded-sm p-7">
+          <span class="font-display text-3xl leading-none block mb-3" style="color:var(--accent)">&ldquo;</span>
+          <p class="text-ink leading-relaxed">
+            Ravie de mes mèches, accueil au top, j'ai passé un très bon moment. Prestation ultra pro, merci aux quatre mains en or.
+          </p>
+          <footer class="mt-5 text-ink2 text-sm">Cliente, mai 2026</footer>
+        </blockquote>
       </div>
     </div>
-    <div class="mt-12 pt-6 border-t border-line flex flex-col sm:flex-row justify-between gap-3 text-xs text-ink-2">
-      <p>© <span id="yr"></span> Soldani Coiffure, Occhiatana.</p>
-      <p>Site réalisé par <a href="https://webagentic.speedpost.fr" target="_blank" rel="noopener" class="link-u">SpeedPost.fr</a></p>
+  </div>
+</section>
+
+<!-- ============ BANDEAU BALAGNE ============ -->
+<section class="relative w-full overflow-hidden">
+  <div class="sweep js-sweep relative">
+    <img src="./assets/images/village-balagne.jpg" alt="Village perché de Balagne, maisons de pierre au-dessus du maquis"
+         class="hero-img w-full object-cover h-[44vh] sm:h-[52vh]" loading="eager" decoding="async" />
+    <div class="band-scrim"></div>
+    <div class="on-photo absolute inset-0 flex items-center">
+      <div class="max-w-7xl mx-auto w-full px-5 sm:px-8">
+        <p class="eyebrow mb-4" style="color:#F1E0CF">Le cadre</p>
+        <h2 class="font-display font-light text-white tracking-tight leading-[1.05] max-w-2xl"
+            style="font-size:clamp(1.8rem,4.4vw,3.2rem)">
+          Se faire coiffer dans un village de Balagne.
+        </h2>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ RDV / INFOS ============ -->
+<section id="rdv" class="px-5 sm:px-8 py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-16">
+    <!-- left : RDV -->
+    <div>
+      <p data-reveal class="eyebrow text-ink2 mb-5">Prendre rendez-vous</p>
+      <h2 data-reveal class="font-display font-light tracking-tight leading-[1.05]" style="font-size:clamp(1.9rem,4.4vw,3rem)">
+        On vous attend
+      </h2>
+      <p data-reveal class="mt-6 text-ink2 text-lg leading-relaxed font-light max-w-md">
+        Choisissez votre créneau en ligne, à toute heure, et découvrez la grille des prestations. Vous préférez en parler de vive voix ? Appelez Kevin, il vous répond avec plaisir.
+      </p>
+
+      <div data-reveal class="mt-9 flex flex-wrap gap-4">
+        <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener"
+           class="btn-accent inline-flex items-center gap-2 text-white px-7 py-4 rounded-full text-sm font-semibold tracking-wide"
+           style="background:var(--accent)">
+          Réserver sur Planity
+        </a>
+        <a href="tel:+33775834320"
+           class="inline-flex items-center gap-2 border border-line text-ink px-7 py-4 rounded-full text-sm font-semibold tracking-wide hover:border-accent transition">
+          07 75 83 43 20
+        </a>
+      </div>
+
+      <!-- horaires -->
+      <div data-reveal class="mt-12">
+        <p class="eyebrow text-ink2 mb-4">Horaires</p>
+        <ul class="text-[0.98rem]">
+          <li data-day="1" class="flex justify-between py-2.5 border-t border-line"><span>Lundi</span><span class="text-ink2">Fermé</span></li>
+          <li data-day="2" class="flex justify-between py-2.5 border-t border-line"><span>Mardi</span><span class="text-ink2">9h00 - 18h00</span></li>
+          <li data-day="3" class="flex justify-between py-2.5 border-t border-line"><span>Mercredi</span><span class="text-ink2">9h00 - 18h00</span></li>
+          <li data-day="4" class="flex justify-between py-2.5 border-t border-line"><span>Jeudi</span><span class="text-ink2">9h00 - 18h00</span></li>
+          <li data-day="5" class="flex justify-between py-2.5 border-t border-line"><span>Vendredi</span><span class="text-ink2">9h00 - 18h00</span></li>
+          <li data-day="6" class="flex justify-between py-2.5 border-t border-line"><span>Samedi</span><span class="text-ink2">9h00 - 14h00</span></li>
+          <li data-day="0" class="flex justify-between py-2.5 border-t border-line border-b"><span>Dimanche</span><span class="text-ink2">Fermé</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- right : map + adresse -->
+    <div data-reveal>
+      <p class="eyebrow text-ink2 mb-4">Trouver le salon</p>
+      <p class="font-display text-xl font-normal leading-snug">20 U Ghjandaracciu</p>
+      <p class="text-ink2 mt-1">20226 Occhiatana, Balagne · à 9 km de L'Île-Rousse</p>
+      <div class="mt-5 rounded-sm overflow-hidden border border-line">
+        <iframe class="maps-frame w-full h-[340px] sm:h-[420px]" style="border:0"
+                src="https://maps.google.com/maps?q=42.572536,9.0088673&z=15&output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Carte : Soldani Coiffure, Occhiatana"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t border-line px-5 sm:px-8 py-14">
+  <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-end sm:justify-between gap-8">
+    <div>
+      <a href="#top" class="font-display text-2xl tracking-tight flex items-center gap-1.5">
+        SOLDANI<span class="inline-block w-1.5 h-1.5 rounded-full" style="background:var(--accent)"></span>
+      </a>
+      <p class="mt-3 text-ink2 text-sm leading-relaxed">
+        20 U Ghjandaracciu, 20226 Occhiatana, Balagne<br>
+        <a href="tel:+33775834320" class="hover:text-accent transition">07 75 83 43 20</a>
+      </p>
+      <p class="mt-3 text-sm" style="color:var(--accent)">★ 5,0 · 100 % cinq étoiles</p>
+    </div>
+    <div class="text-ink2 text-sm sm:text-right">
+      <p>Mardi au vendredi : 9h00 - 18h00</p>
+      <p>Samedi : 9h00 - 14h00 · Lundi & dimanche : fermé</p>
+      <a href="https://www.planity.com/soldani-20226-occhiatana" target="_blank" rel="noopener"
+         class="inline-block mt-4 font-semibold border-b border-accent pb-0.5 transition hover:opacity-70" style="color:var(--accent)">
+        Prendre rendez-vous
+      </a>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-line flex flex-col sm:flex-row justify-between gap-2 text-[11px] text-ink2">
+    <span>© <span id="year"></span> Soldani Coiffure</span>
+    <span>Site réalisé par SpeedPost.fr</span>
   </div>
 </footer>
 
 <script type="module">
   document.documentElement.classList.add('js-ready');
-  document.getElementById('yr').textContent = new Date().getFullYear();
+  const $ = (s, c=document) => c.querySelector(s);
+  const $$ = (s, c=document) => [...c.querySelectorAll(s)];
 
-  const root = document.documentElement;
-  let userTouched = false;
+  // year
+  $('#year').textContent = new Date().getFullYear();
 
-  // --- curseur de balayage ---
-  const slider = document.getElementById('balayageSlider');
-  const setBalayage = (v) => root.style.setProperty('--balayage-pos', v);
-  slider.addEventListener('input', (e) => { userTouched = true; setBalayage(e.target.value); });
+  // highlight current day
+  const today = new Date().getDay();
+  const dayEl = $(`[data-day="${today}"]`);
+  if (dayEl){
+    dayEl.style.color = 'var(--accent)';
+    dayEl.style.fontWeight = '600';
+    const v = dayEl.querySelector('span:last-child');
+    if (v) v.style.color = 'var(--accent)';
+  }
 
-  // nuancier -> pilote le slider
-  document.querySelectorAll('[data-tone]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      userTouched = true;
-      const v = btn.getAttribute('data-tone');
-      setBalayage(v); slider.value = v;
-      document.querySelectorAll('[data-tone]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
+  // mobile menu
+  const burger = $('#burger'), menu = $('#mobile-menu');
+  burger?.addEventListener('click', () => menu.classList.toggle('hidden'));
+  $$('.mob-link').forEach(a => a.addEventListener('click', () => menu.classList.add('hidden')));
 
+  // nav solid state via sentinel (no scroll-linked math)
+  const nav = $('#nav'), sentinel = $('#hero-sentinel');
+  if (sentinel && 'IntersectionObserver' in window){
+    new IntersectionObserver(([e]) => {
+      nav.classList.toggle('solid', !e.isIntersecting);
+    }, {rootMargin: '-72px 0px 0px 0px'}).observe(sentinel);
+  } else { nav.classList.add('solid'); }
+
+  // Motion One one-shot reveals + signatures
   try {
     const { animate, inView } = await import('https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm');
 
-    // scroll natif : ancres via CSS scroll-behavior:smooth + scroll-margin-top (aucun hijack molette)
+    inView('[data-reveal]', (el) => {
+      animate(el, { opacity: [0,1], transform: ['translateY(18px)','translateY(0)'] },
+        { duration: 0.5, easing: [0.2,0.7,0.2,1] });
+    }, { amount: 0.2 });
 
-    // auto-oscillation idle du balayage
-    let phase = 0;
-    const idle = () => {
-      if (!userTouched){
-        phase += 0.016;
-        const v = 42 + Math.sin(phase) * 30;
-        setBalayage(v.toFixed(1));
-      }
-      requestAnimationFrame(idle);
-    };
-    requestAnimationFrame(idle);
+    // light sweep on images (one-shot at inView)
+    inView('.js-sweep', (el) => {
+      el.classList.add('is-swept');
+      setTimeout(() => el.classList.remove('is-swept'), 900);
+    }, { amount: 0.35 });
 
-    // dégradé de fond figé (racine -> pointes) : valeur stable, pas de scrub scroll
-    root.style.setProperty('--balayage-scroll', '0.5');
+    // stars stagger fill
+    inView('#stars', (el) => {
+      const stars = $$('.star', el);
+      el.classList.add('stars-in');
+      stars.forEach((s, i) => {
+        s.style.transition = 'none';
+        s.style.opacity = '0.18';
+        s.style.transform = 'scale(.8)';
+        animate(s, { opacity: [0.18,1], transform: ['scale(.8)','scale(1)'] },
+          { duration: 0.35, delay: i * 0.09, easing: [0.2,0.7,0.2,1] });
+      });
+    }, { amount: 0.6 });
 
-    // mèche conductrice : tracé one-shot quand elle entre dans le viewport (jamais collé au scroll)
-    inView('#strandA, #strandB, #strandC', (info) => {
-      animate(info.target, { strokeDashoffset:[1, 0] }, { duration:1.1, easing:[0.4,0,0.2,1] });
-    }, { amount:0.1 });
-
-    // reveals
-    inView('[data-reveal]', (info) => {
-      animate(info.target, { opacity:[0,1], transform:['translateY(18px)','translateY(0)'] },
-        { duration:0.5, easing:[0.2,0.7,0.2,1] });
-    }, { amount:0.15 });
-
-    // sweep de lumière sur images
-    inView('[data-sweep]', (info) => {
-      info.target.classList.add('swept');
-    }, { amount:0.3 });
-
-    // (parallax scroll-linked retiré : scroll natif, aucun effet collé à la position de scroll)
-
-    // confettis-mèches sur les avis (une fois)
-    const host = document.getElementById('confettiHost');
-    let fired = false;
-    inView('#avis', () => {
-      if (fired || !host) return; fired = true;
-      const cols = ['#2E2018','#B26A3C','#E7CFA6','#F4E7D2'];
-      for (let i=0;i<16;i++){
-        const c = document.createElement('span');
-        c.className = 'confetti';
-        c.style.left = (Math.random()*100) + '%';
-        c.style.background = cols[i % cols.length];
-        c.style.height = (12 + Math.random()*16) + 'px';
-        host.appendChild(c);
-        animate(c,
-          { opacity:[0,1,1,0], transform:[`translateY(0) rotate(0deg)`, `translateY(${180+Math.random()*220}px) rotate(${Math.random()*220-110}deg)`] },
-          { duration:1.2 + Math.random()*0.5, delay:Math.random()*0.4, easing:[0.3,0.6,0.3,1] }
-        );
-      }
-    }, { amount:0.3 });
-
-  } catch(err){
-    // filet de sécurité : CSS @keyframes autoreveal prend le relais
-    console.warn('Motion indisponible, fallback CSS actif', err);
+  } catch (e) {
+    // safety net: CSS @keyframes autoreveal handles [data-reveal]
+    $$('.js-sweep').forEach(el => el.classList.add('is-swept'));
+    $('#stars')?.classList.add('stars-in');
   }
 </script>
-
 </body>
 </html>
